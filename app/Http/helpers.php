@@ -104,6 +104,19 @@ use App\Models\User;
         return $min + $rnd;
     }
 
+    function getrandomNumber($length)
+    {
+        $token = "";
+        $type="distinct";
+        $max   = strlen(getPool($type));
+        for ($i = 0; $i < $length; $i++) {
+            $token .= getPool($type)[secureCrypt(0, $max)];
+        }
+ 
+        return $token;
+    }
+ 
+
        /**
      * Finally, generate a hashed token
      * @param  integer $length

@@ -12,3 +12,5 @@ npm-debug.log
 yarn-error.log
 /public/move
 template
+public/assets
+public/move

@@ -77,6 +77,9 @@ Route::group(['middleware'=>'check-permission:administrator|staff'], function ()
 
 Route::group(['middleware'=>'check-permission:administrator'], function () {
   //GET
+  Route::get('basic-settings', ['as'=>'basic-settings','uses'=>'AdminController@BasicSettings']);
+  Route::resource('category', categoryController::class);
+  Route::resource('product', productController::class);
 
 
 });
@@ -87,12 +90,15 @@ Route::group(['middleware'=>'check-permission:administrator|staff|customer'], fu
 
 Route::group(['middleware'=>'check-permission:customer'], function () {
   Route::get('shop-cart', ['as'=>'shop-cart','uses'=>'OrderController@cart']);
+
+  Route::post('/checkout','OrderController@checkout')->name('checkout');
+  Route::post('/checkOUT','OrderController@checkOUT')->name('checkOUT');
+  Route::patch('update-cart', 'OrderController@update');
+    Route::delete('remove-from-cart', 'OrderController@remove');
+    Route::post('/Payment', 'OrderController@createPackage')->name('buy_ticket');
+
 });
-Route::post('/checkout','OrderController@checkout')->name('checkout');
-Route::post('/checkOUT','OrderController@checkOUT')->name('checkOUT');
-Route::patch('update-cart', 'OrderController@update');
-  Route::delete('remove-from-cart', 'OrderController@remove');
-  Route::post('/Payment', 'OrderController@createPackage')->name('buy_ticket');
+
 
 
 });

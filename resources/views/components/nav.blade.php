@@ -67,6 +67,7 @@
               </form>
               @endguest
               @auth
+              @if(checkPermission(['customer']))
             <div class="navbar-tool dropdown ms-3"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="{{route('shop-cart') }}"><span class="navbar-tool-label">{{ count(session('cart')) }}</span><i class="navbar-tool-icon ci-cart"></i></a><a class="navbar-tool-text" href="{{url('shop-cart') }}"><small>My Cart</small>  <?php $total = 0 ?>
               @foreach(session('cart') as $id => $details)
                   <?php $total += $details['price'] * $details['quantity'] ?>
@@ -99,6 +100,7 @@
                 </div>
               </div>
             </div>
+            @endif 
             @endauth
           </div>
         </div>
@@ -119,12 +121,13 @@
               </li>
              
               @auth
-              @if(checkPermission(['superAdmin']))
-
-              @elseif(checkPermission(['admin']))
-
-
+              @if(checkPermission(['administrator']))
+              <li class="nav-item dropdown {{Request::is('/basic-settings') ? 'active' : ''}}"><a class="nav-link" href="{{url('/basic-settings') }}" >Basic Settings</a>          
+              </li>
               @elseif(checkPermission(['staff']))
+
+
+              @elseif(checkPermission(['customer']))
 
 
               @else

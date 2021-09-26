@@ -1,3 +1,48 @@
+  <!-- Modal -->
+  <div class="modal fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLongTitle">View</h5>
+    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body" id="smallBody">
+        <div>
+            <!-- the result to be displayed apply here -->
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+    </div>
+    </div>
+    </div>
+    </div>
+
+
+      <!-- Modal -->
+<div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLongTitle">New </h5>
+    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body" id="mediumBody">
+        <div>
+            <!-- the result to be displayed apply here -->
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+    </div>
+    </div>
+    </div>
+    </div>
+   
    <!-- Footer-->
    <footer class="footer bg-dark pt-5">
     <div class="container">
@@ -158,6 +203,62 @@
   <!-- Main theme script-->
   <script src="{{ asset('assets/js/theme.min.js') }}"></script>
 @yield('javascript')
+
+<script>
+  // display a modal (small modal)
+  $(document).on('click', '#smallButton', function(event) {
+      event.preventDefault();
+      let href = $(this).attr('data-attr');
+      $.ajax({
+          url: href,
+          beforeSend: function() {
+              $('#loader').show();
+          },
+          // return the result
+          success: function(result) {
+              $('#smallModal').modal("show");
+              $('#smallBody').html(result).show();
+          },
+          complete: function() {
+              $('#loader').hide();
+          },
+          error: function(jqXHR, testStatus, error) {
+              console.log(error);
+              alert("Page " + href + " cannot open. Error:" + error);
+              $('#loader').hide();
+          },
+          timeout: 8000
+      })
+  });
+
+  // display a modal (medium modal)
+  $(document).on('click', '#mediumButton', function(event) {
+      event.preventDefault();
+      let href = $(this).attr('data-attr');
+      $.ajax({
+          url: href,
+          beforeSend: function() {
+              $('#loader').show();
+          },
+          // return the result
+          success: function(result) {
+              $('#mediumModal').modal("show");
+              $('#mediumBody').html(result).show();
+          },
+          complete: function() {
+              $('#loader').hide();
+          },
+          error: function(jqXHR, testStatus, error) {
+              console.log(error);
+              alert("Page " + href + " cannot open. Error:" + error);
+              $('#loader').hide();
+          },
+          timeout: 8000
+      })
+  });
+
+</script>
+
 @foreach (['error', 'success'] as $status)
 @if(Session::has($status))
 
